@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spenca -Login/Registration Form</title>
+
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="./assets/css/login.css">
+    <link href="assets/css/color.css" rel="stylesheet">
+    <link href="assets/css/style.css" rel="stylesheet">  
+</head>
+<body class="bg-color-1">
+    <div class="container">
+        <div class="form-box login">
+            <form action="">
+                <h1>Logic</h1>
+                 <div class="input-box">
+                    <input type="text" placeholder="Username" required>
+                    <i class='bx bxs-user'></i>
+                 </div>
+                 <div class="input-box">
+                    <input type="password" placeholder="Password" required>
+                    <i class='bx bx-lock'></i>
+                 </div>
+                 <div class="forgot-link">
+                    <a href="#">Forgot password ?</a>
+                 </div>
+                 <button type="submit" class="btn">Login</button>
+                 <div class="delivery-icons">
+                    <div class="delivery-item">
+                        <i class='bx bx-package'></i>
+                        <span>Fast Delivery</span>
+                      </div>
+                      <div class="delivery-item">
+                        <i class='bx bx-cycling'></i>
+                        <span>Fresh To Door</span>
+                      </div>
+                      <div class="delivery-item">
+                        <i class='bx bx-user-check'></i>
+                        <span>No Middlemen</span>
+                      </div>
+                 </div>
+            </form>
+        </div>
+
+
+        <div class="form-box register">
+            <form action="">
+                <h1>Registration</h1>
+                 <div class="input-box">
+                    <input type="text" placeholder="Username" required>
+                    <i class='bx bxs-user'></i>
+                 </div>
+                 <div class="input-box">
+                    <input type="password" placeholder="Password" required>
+                    <i class='bx bx-lock'></i>
+                 </div>
+                 <button type="submit" class="btn">Register</button>
+                 <div class="delivery-icons">
+                    <div class="delivery-item">
+                        <i class='bx bx-package'></i>
+                        <span>Fast Delivery</span>
+                      </div>
+                      <div class="delivery-item">
+                        <i class='bx bx-cycling'></i>
+                        <span>Fresh To Door</span>
+                      </div>
+                      <div class="delivery-item">
+                        <i class='bx bx-user-check'></i>
+                        <span>No Middlemen</span>
+                      </div>
+                 </div>
+            </form>
+        </div>
+        <div class="toggle-box">
+            <div class="toggle-panel toggle-left">
+                <h1>Hello, Welcome!!!</h1>
+                <p>Already have an Account ?</p>
+                <button class="btn register-btn">Register</button>
+            </div>
+            <div class="toggle-panel toggle-right">
+                <h1>Hello, Welcome Back</h1>
+                <p>Don't have an Account ?</p>
+                <button class="btn login-btn">Login</button>
+            </div>
+        </div>
+    </div>
+    <script>
+        const container=document.querySelector('.container');
+        const registerBtn= document.querySelector('.register-btn');
+        const loginBtn=document.querySelector('.login-btn');
+
+        registerBtn.addEventListener('click',() =>{
+            container.classList.add('active');
+        });
+        loginBtn.addEventListener('click',() =>{
+            container.classList.remove('active');
+        });
+    </script>
+</body>
+</html>
