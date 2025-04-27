@@ -8262,9 +8262,10 @@ h3 {
   justify-content: center;
   gap: 30px; /* space between cards */
   margin-top: 50px;
+  flex-wrap: wrap; /* allow wrapping */
 }
 
-.card p{
+.card p {
   font-size: 20px;
   font-weight: 500;
 }
@@ -8292,6 +8293,30 @@ h3 {
   object-fit: cover;
   border-radius: 30px; 
   margin-bottom: 15px;
+}
+
+/* ---- Mobile Responsive Part ---- */
+@media (max-width: 768px) {
+  .card-row {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .card {
+    width: 80%;
+    height: auto;
+    border-radius: 20px;
+    padding: 15px;
+  }
+
+  .card img {
+    height: auto;
+    max-height: 200px;
+  }
+
+  .card p {
+    font-size: 18px;
+  }
 }
 
 /* home page customized branding css-------------------------------------------------------------------------- */
