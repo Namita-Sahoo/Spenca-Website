@@ -238,8 +238,9 @@
                                 </div>
                                 <div class="widget-content">
                                     <ul class="category-list clearfix" id="categoryFilter">
-                                        <li data-category="Minerals"><a href="#"><i class="far fa-long-arrow-right"></i>Minerals Bottle</a></li>
-                                        <li data-category="Energy"><a href="#"><i class="far fa-long-arrow-right"></i>Energy Drink</a></li>
+                                        <li data-category="All" class="active"><a href="#"><i class="fas fa-long-arrow-right"></i>All Products</a></li>
+                                        <li data-category="Minerals"><a href="#"><i class="fas fa-long-arrow-right"></i>Minerals Bottle</a></li>
+                                        <li data-category="Energy"><a href="#"><i class="fas fa-long-arrow-right"></i>Energy Drink</a></li>
                                         <li data-category="SoftDrinks"><a href="#"><i class="far fa-long-arrow-right"></i>Soft Drinks</a></li>
                                         <li data-category="Milk"><a href="#"><i class="far fa-long-arrow-right"></i>Flavoured Milk</a></li>
                                         <li data-category="Cleaning"><a href="#"><i class="far fa-long-arrow-right"></i>Cleaning products</a></li>
@@ -284,7 +285,7 @@
                         <div class="our-shop">
                             <div class="row clearfix">
                                 
-                                <div class="col-lg-6 col-md-6 col-sm-12 shop-block" data-category="Minerals">
+                                <!-- <div class="col-lg-6 col-md-6 col-sm-12 shop-block" data-category="Minerals">
                                     <div class="shop-block-one wow fadeInUp animated" data-wow-delay="300ms" data-wow-duration="1500m">
                                         <div class="inner-box">
                                             <figure class="image-box"><img src="./assets/images/images/img2(1000ml).jpg" alt=""></figure>
@@ -419,9 +420,9 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </div>-->
                                 <!-- milk products--------------------------------------------- -->
-                                <div class="col-lg-6 col-md-6 col-sm-12 shop-block" data-category="Milk">
+                                <!-- <div class="col-lg-6 col-md-6 col-sm-12 shop-block" data-category="Milk">
                                     <div class="shop-block-one wow fadeInUp animated" data-wow-delay="00ms" data-wow-duration="1500m">
                                         <div class="inner-box">
                                             <figure class="image-box"><img src="./assets/images/images/milk-1.jpg" alt=""></figure>
@@ -488,9 +489,9 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </div> -->
                                 <!-- Soda ------------------------------------------->
-                                <div class="col-lg-6 col-md-6 col-sm-12 shop-block" data-category="SoftDrinks">
+                                <!-- <div class="col-lg-6 col-md-6 col-sm-12 shop-block" data-category="SoftDrinks">
                                     <div class="shop-block-one wow fadeInUp animated" data-wow-delay="00ms" data-wow-duration="1500m">
                                         <div class="inner-box">
                                             <figure class="image-box"><img src="./assets/images/images/softdrinks.jpg" alt=""></figure>
@@ -523,9 +524,9 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </div> -->
                                 <!-- energy drink ------------------------------->
-                                <div class="col-lg-6 col-md-6 col-sm-12 shop-block" data-category="Energy">
+                                <!-- <div class="col-lg-6 col-md-6 col-sm-12 shop-block" data-category="Energy">
                                     <div class="shop-block-one wow fadeInUp animated" data-wow-delay="00ms" data-wow-duration="1500m">
                                         <div class="inner-box">
                                             <figure class="image-box"><img src="./assets/images/images/energy1.jpg" alt=""></figure>
@@ -558,9 +559,9 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </div> -->
                                 <!-- cleaning ---------------------------------->
-                                <div class="col-lg-6 col-md-6 col-sm-12 shop-block" data-category="Cleaning">
+                                <!-- <div class="col-lg-6 col-md-6 col-sm-12 shop-block" data-category="Cleaning">
                                     <div class="shop-block-one wow fadeInUp animated" data-wow-delay="00ms" data-wow-duration="1500m">
                                         <div class="inner-box">
                                             <figure class="image-box"><img src="./assets/images/images/clean-1.jpg" alt=""></figure>
@@ -695,10 +696,10 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </div> -->
                                 
                                 <!-- tea ----------------------------->
-                                <div class="col-lg-6 col-md-6 col-sm-12 shop-block" data-category="Tea">
+                                <!-- <div class="col-lg-6 col-md-6 col-sm-12 shop-block" data-category="Tea">
                                     <div class="shop-block-one wow fadeInUp animated" data-wow-delay="00ms" data-wow-duration="1500m">
                                         <div class="inner-box">
                                             <figure class="image-box"><img src="./assets/images/images/tea.jpg" alt=""></figure>
@@ -748,7 +749,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </div>  -->
                             </div>
                         </div>
                     </div>
@@ -898,6 +899,81 @@
 
     <!-- main-js -->
     <script src="assets/js/script.js"></script>
-
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            loadProducts(); // Load all products initially
+    
+            // Add click event to category filter
+            document.querySelectorAll("#categoryFilter li").forEach(categoryItem => {
+                categoryItem.addEventListener("click", function(e) {
+                    e.preventDefault();
+                    const category = this.getAttribute("data-category");
+                    filterCategory(category);
+                    highlightActiveCategory(this);
+                });
+            });
+        });
+    
+        // Load products from server
+        async function loadProducts() {
+            const response = await fetch('http://localhost:3000/products');
+            const products = await response.json();
+            displayProducts(products);
+        }
+    
+        // Display products in HTML
+        function displayProducts(products) {
+            const productContainer = document.querySelector(".our-shop .row.clearfix");
+            productContainer.innerHTML = ""; // Clear existing products
+    
+            products.forEach(product => {
+                const productHTML = `
+                    <div class="col-lg-6 col-md-6 col-sm-12 shop-block" data-category="${product.category}">
+                        <div class="shop-block-one wow fadeInUp animated" data-wow-delay="00ms" data-wow-duration="1500ms">
+                            <div class="inner-box">
+                                <figure class="image-box"><img src="${product.image_url}" alt="${product.name}"></figure>
+                                <div class="lower-content">
+                                    <div class="shape" style="background-image: url(assets/images/shape/shape-7.png);"></div>
+                                    <span>${product.category}</span>
+                                    <h4><a href="shop-details.html">${product.name}</a></h4>
+                                    <h6>$${product.price}</h6>
+                                    <p>${product.description}</p>
+                                    <div class="btn-box">
+                                        <a href="shop-details.html" class="theme-btn btn-two">Add to cart</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                productContainer.innerHTML += productHTML;
+            });
+        }
+    
+        // Function to filter products by category
+        function filterCategory(category) {
+            const allProducts = document.querySelectorAll('.shop-block');
+    
+            allProducts.forEach(product => {
+                const productCategory = product.getAttribute('data-category');
+                if (category === "All" || productCategory === category) {
+                    product.style.display = 'block';
+                } else {
+                    product.style.display = 'none';
+                }
+            });
+        }
+    
+        // Function to highlight active category
+        function highlightActiveCategory(activeElement) {
+            document.querySelectorAll("#categoryFilter li").forEach(item => {
+                item.classList.remove("active");
+            });
+            activeElement.classList.add("active");
+        }
+    </script>
+    
+    <script src="assets/js/server.js"></script>
+    
 </body><!-- End of .page_wrapper -->
 </html>

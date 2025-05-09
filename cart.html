@@ -268,79 +268,23 @@
                                         <th class="price">Price</th>
                                         <th class="quantity">Quantity</th>
                                         <th>Subtotal</th>
+                                        <th>Delete</th>
                                     </tr>    
                                 </thead>
-                                <tbody>
-                                    <tr>
-                                        <td colspan="4" class="prod-column">
-                                            <div class="column-box">
-                                                <div class="remove-btn">
-                                                    <i class="fal fa-times"></i>
-                                                </div>
-                                                <div class="prod-thumb">
-                                                    <img src="assets/images/resource/shop/cart-1.jpg" alt="">
-                                                </div>
-                                                <div class="prod-title">
-                                                    Mineral Water Bottle
-                                                </div>    
-                                            </div>
-                                        </td>
-                                        <td class="price">$35.00</td>
-                                        <td class="qty">
-                                            <div class="item-quantity">
-                                                <input class="quantity-spinner" type="text" value="1" name="quantity">
-                                            </div>
-                                        </td>
-                                        <td class="sub-total">$35.00</td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="4" class="prod-column">
-                                            <div class="column-box">
-                                                <div class="remove-btn">
-                                                    <i class="fal fa-times"></i>
-                                                </div>
-                                                <div class="prod-thumb">
-                                                    <img src="assets/images/resource/shop/cart-2.jpg" alt="">
-                                                </div>
-                                                <div class="prod-title">
-                                                    Mineral Water Bottle
-                                                </div>    
-                                            </div>
-                                        </td>
-                                        <td class="price">$40.00</td>
-                                        <td class="qty">
-                                            <div class="item-quantity">
-                                                <input class="quantity-spinner" type="text" value="1" name="quantity">
-                                            </div>
-                                        </td>
-                                        <td class="sub-total">$40.00</td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="4" class="prod-column">
-                                            <div class="column-box">
-                                                <div class="remove-btn">
-                                                    <i class="fal fa-times"></i>
-                                                </div>
-                                                <div class="prod-thumb">
-                                                    <img src="assets/images/resource/shop/cart-3.jpg" alt="">
-                                                </div>
-                                                <div class="prod-title">
-                                                    Mineral Water Bottle
-                                                </div>    
-                                            </div>
-                                        </td>
-                                        <td class="price">$45.00</td>
-                                        <td class="qty">
-                                            <div class="item-quantity">
-                                                <input class="quantity-spinner" type="text" value="1" name="quantity">
-                                            </div>
-                                        </td>
-                                        <td class="sub-total">$45.00</td>
-                                    </tr>
+                                <tbody id="cart-items">
+                                    
                                 </tbody>    
                             </table>
                         </div>
                     </div>
+                </div>
+                 <!-- Total Price and Checkout Section -->
+                <div class="cart-total">
+                    <div class="total">
+                        <span>Total:</span>
+                        <span id="total-price">$0.00</span>
+                    </div>
+                    <button id="checkout-btn">Checkout</button>
                 </div>
                 <div class="othre-content clearfix">
                     <div class="coupon-box pull-left clearfix">
@@ -509,6 +453,8 @@
 
     <!-- main-js -->
     <script src="assets/js/script.js"></script>
+    <script src="assets/js/cart.js"></script>
+    <script src="assets/js/server.js"></script>
 
 </body><!-- End of .page_wrapper -->
 </html>
