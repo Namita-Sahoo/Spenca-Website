@@ -1,6 +1,8 @@
 const express = require('express');
 const mysql = require('mysql2');
 const bodyParser = require('body-parser');
+const path =require('path');
+require('dotenv').config(); // Import dotenv to load environment variables
 
 // Initialize Express
 const app = express();
@@ -8,12 +10,27 @@ app.use(bodyParser.json());
 app.use('/assets', express.static('assets'));
 
 
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'index.html'));
+});
+
+// Serve HTML files directly from root
+app.get('/about', (req, res) => res.sendFile(path.join(__dirname, 'about.html')));
+app.get('/blog', (req, res) => res.sendFile(path.join(__dirname, 'blog.html')));
+app.get('/cart', (req, res) => res.sendFile(path.join(__dirname, 'cart.html')));
+app.get('/checkout', (req, res) => res.sendFile(path.join(__dirname, 'checkout.html')));
+app.get('/contact', (req, res) => res.sendFile(path.join(__dirname, 'contact.html')));
+app.get('/loginform', (req, res) => res.sendFile(path.join(__dirname, 'loginform.html')));
+app.get('/shop', (req, res) => res.sendFile(path.join(__dirname, 'shop.html')));
+app.get('/shop-details', (req, res) => res.sendFile(path.join(__dirname, 'shop-details.html')));
+app.get('/testimonials', (req, res) => res.sendFile(path.join(__dirname, 'testimonials.html')));
+
 // MySQL Connection Setup
 const db = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: '',
-    database: 'spenca'
+    host: process.env.DB_HOST, // Get the host from the .env file
+    user: process.env.DB_USER, // Get the user from the .env file
+    password: process.env.DB_PASSWORD, // Get the password from the .env file
+    database: process.env.DB_DATABASE // Get the database from the .env file
 });
 
 db.connect((err) => {
@@ -21,14 +38,26 @@ db.connect((err) => {
     console.log('Connected to MySQL Database.');
 });
 
-// Get All Products
+
+// Get All Products (with optional category filter)
 app.get('/products', (req, res) => {
-    const query = 'SELECT * FROM products';
-    db.query(query, (err, results) => {
+    const { category } = req.query;
+    let query = 'SELECT * FROM products';
+    let params = [];
+
+    if (category) {
+        query += ' WHERE category = ?';
+        params.push(category);
+    }
+
+    console.log('Query:', query, 'Params:', params); // Debugging
+
+    db.query(query, params, (err, results) => {
         if (err) return res.status(500).send(err);
         res.status(200).json(results);
     });
 });
+
 
 // Get Single Product by ID
 app.get('/products/:id', (req, res) => {
@@ -40,7 +69,7 @@ app.get('/products/:id', (req, res) => {
     });
 });
 
-// Add Product to Cart
+// Add Product to Cart (commented out for now)
 // app.post('/cart', (req, res) => {
 //     const { user_id, product_id, quantity } = req.body;
 //     const query = 'INSERT INTO cart_items (cart_id, product_id, quantity) VALUES ((SELECT carts_id FROM carts WHERE user_id = ?), ?, ?)';
@@ -63,6 +92,7 @@ app.get('/cart/:userId', (req, res) => {
         res.status(200).json(results);
     });
 });
+
 // Update Cart Item Quantity
 app.post('/cart/update', (req, res) => {
     const { user_id, product_id, quantity } = req.body;
@@ -108,6 +138,7 @@ app.post('/checkout', (req, res) => {
                            SELECT ?, product_id, quantity, price FROM cart_items 
                            WHERE cart_id = (SELECT carts_id FROM carts WHERE user_id = ?)`;
 
+
         db.query(itemQuery, [orderId, user_id], (err) => {
             if (err) return res.status(500).send(err);
 
@@ -119,24 +150,6 @@ app.post('/checkout', (req, res) => {
                 res.status(200).send('Checkout completed successfully');
             });
         });
-    });
-});
-
-
-// Get Products with Optional Category Filter (UPDATED)
-app.get('/products', (req, res) => {
-    const { category } = req.query;
-    let query = 'SELECT * FROM products';
-    let params = [];
-
-    if (category) {
-        query += ' WHERE category = ?';
-        params.push(category);
-    }
-
-    db.query(query, params, (err, results) => {
-        if (err) return res.status(500).send(err);
-        res.status(200).json(results);
     });
 });
 
